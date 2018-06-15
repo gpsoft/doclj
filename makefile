@@ -1,7 +1,6 @@
 IMAGENAME ?= cljenvi
 CONTAINERNAME ?= cljenv
-
-curdir=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+USER ?= $(USERNAME)
 
 all:
 	@echo Usage:
@@ -20,7 +19,7 @@ dev:
 		--env HOST_USER=$(USER) \
 		--env HOST_GID=`id -g` \
 		--env HOST_UID=`id -u` \
-		--volume $(curdir):/home/$(USER)/proj \
+		--volume $(shell pwd):/home/$(USER)/proj \
 		--volume ~/.m2:/home/$(USER)/.m2 \
 		--publish 8080:8080 \
 		--publish 3000:3000 \
