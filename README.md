@@ -25,7 +25,7 @@ This builds the docker image. Default name is `cljenvi`. You can change it by `I
 
 This brings you into the container. `cljenv` is the default name, which can be customized by `CONTAINERNAME` env. variable.
 
-## About the container
+# About the container
 
 - The maven repository(`~/.m2`) is shared with the host
 - The working directory is `~/proj`, which is also shared with the host
@@ -34,9 +34,9 @@ This brings you into the container. `cljenv` is the default name, which can be c
 - `repl` alias launches `rebel-readline`
 - The hostname is same as the container's
 
-## Sample sessions
+# Sample sessions
 
-### Leiningen
+## Leiningen
 
     huracan ~ $ cd ~/dev
     huracan ~/dev $ mkdir proj
@@ -67,7 +67,7 @@ This brings you into the container. `cljenv` is the default name, which can be c
 
 You can connect to the nREPL server from the host through port 3575.
 
-### Boot
+## Boot
 
     huracan ~/dev/proj $ make dev
     maru@cljenv:~/proj$ boot -u
@@ -115,11 +115,11 @@ You can connect to the nREPL server from the host through port 3575.
                   (user/clojuredocs "ns-here" "name-here")
     hello-boot.core=> 
 
-# Rebel-readline
+## Rebel-readline
 
 ![rebel-readline](ss.png)
 
-# Clojure/Clj
+## Clojure/Clj
 
     maru@cljenv:~/proj$ vim deps.edn
         {:deps {org.clojure/clojure {:mvn/version "1.9.0"}
@@ -154,3 +154,14 @@ You can connect to the nREPL server from the host through port 3575.
         (System/exit 0)
 
 ![clojure](ss2.png)
+
+## Clonya(ClojureScript with Figwheel)
+
+    maru@cljenv:~/proj$ git clone https://github.com/gpsoft/clonya.git
+    maru@cljenv:~/proj$ cd clonya/
+    maru@cljenv:~/proj/clonya$ git checkout notsominimal
+    maru@cljenv:~/proj/clonya$ lein repl
+    user=> (go)
+    user=> 
+
+See also [gpsoft/clonya(https://github.com/gpsoft/clonya)](https://github.com/gpsoft/clonya).
