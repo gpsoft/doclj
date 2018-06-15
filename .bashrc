@@ -4,4 +4,4 @@ eval "`dircolors`"
 alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -lrt'
 
-alias repl='clojure -A:rebel-leadline'
+alias repl='clojure -A:rebel-readline'
