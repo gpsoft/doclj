@@ -1,11 +1,13 @@
-FROM openjdk:8u171-jdk-stretch
+FROM openjdk:8-jdk-stretch
 
 WORKDIR /root
 
-# rlwrap for clj command
+# utils
+ENV DEBCONF_NOWARNINGS yes
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         vim \
+        git \
         rlwrap \
     && rm -rf /var/lib/apt/lists/*
 
@@ -14,7 +16,7 @@ ENV LEIN_ROOT=1
 RUN wget -q https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein \
     && chmod 755 lein \
     && mv lein /usr/local/bin \
-    && lein self-install
+    && lein version
 
 # boot
 ENV BOOT_AS_ROOT=yes
@@ -24,7 +26,7 @@ RUN wget -q https://github.com/boot-clj/boot-bin/releases/download/latest/boot.s
     && boot --update
 
 # clojure cli tools
-RUN wget -q -O install.sh https://download.clojure.org/install/linux-install-1.9.0.381.sh \
+RUN wget -q -O install.sh https://download.clojure.org/install/linux-install-1.10.1.469.sh \
     && bash install.sh -p /usr/local \
     && rm install.sh
 
@@ -32,14 +34,15 @@ RUN wget -q -O install.sh https://download.clojure.org/install/linux-install-1.9
 EXPOSE 8080
 EXPOSE 3000
 EXPOSE 3449
+EXPOSE 9500
 EXPOSE 3575
 
 # for convenience
 COPY ./.bashrc /root/
 
 # startup script
-COPY ./dev.sh /root/
-RUN chmod 755 /root/dev.sh
+COPY ./dev.sh /usr/local/bin/
+RUN chmod 755 /usr/local/bin/dev.sh
 
 # clojure tooling environment
 COPY profiles.clj /root/.lein/

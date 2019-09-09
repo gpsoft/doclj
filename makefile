@@ -1,6 +1,8 @@
 IMAGENAME ?= cljenvi
 CONTAINERNAME ?= cljenv
-USER ?= $(USERNAME)
+DK_USER ?= dk_user
+
+CMD_LIST := image dev attach
 
 all:
 	@echo Usage:
@@ -8,35 +10,34 @@ all:
 	@echo make dev
 	@echo make attach
 
+.PHONY: $(CMD_LIST)
+.SILENT: $(CMD_LIST)
+
 # Build a docker image.
 image:
-	docker build --tag=$(IMAGENAME) .
+	cd docker; docker build --tag=$(IMAGENAME) .
 
 # Start development
-.PHONY: dev attach
 dev:
 	docker run --rm -it \
-		--env HOST_USER=$(USER) \
-		--env HOST_GID=`id -g` \
-		--env HOST_UID=`id -u` \
-		--volume $(shell pwd):/home/$(USER)/proj \
-		--volume ~/.m2:/home/$(USER)/.m2 \
+		--volume $(shell pwd):/home/$(DK_USER)/proj \
+		--volume ~/.m2:/home/$(DK_USER)/.m2 \
 		--publish 8080:8080 \
 		--publish 3000:3000 \
 		--publish 3449:3449 \
+		--publish 9500:9500 \
 		--publish 3575:3575 \
 		--hostname $(CONTAINERNAME) \
 		--name $(CONTAINERNAME) \
-		--workdir /home/$(USER)/proj \
-		$(IMAGENAME) /root/dev.sh
+		--workdir /home/$(DK_USER)/proj \
+		$(IMAGENAME) bash dev.sh --login
 
 # Attach to the running container.
 attach:
 	docker exec -it \
-		--user $(USER) \
+		--user $(DK_USER) \
 		$(CONTAINERNAME) bash
 
-.SILENT:
 %:
 	@:
 

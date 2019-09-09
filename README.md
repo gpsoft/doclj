@@ -29,7 +29,7 @@ This brings you into the container. `cljenv` is the default name, which can be c
 
 - The maven repository(`~/.m2`) is shared with the host
 - The working directory is `~/proj`, which is also shared with the host
-- Exposed ports are 8080(web), 3000(another web), 3449(figwheel), 3575(nREPL)
+- Exposed ports are 8080/300(web), 3449/9500(figwheel), 3575(nREPL)
 - Standard tools --`lein`, `boot`, `clojure`, and `clj`-- are all available
 - `repl` alias launches `rebel-readline`
 - The hostname is same as the container's
