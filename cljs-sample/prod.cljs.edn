@@ -1,0 +1,2 @@
+{:main sample.core
+ :output-to "resources/public/js/app.js"}

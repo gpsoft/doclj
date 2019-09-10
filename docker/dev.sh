@@ -23,13 +23,15 @@ if [ $DK_USER = UNKNOWN ]; then
         --uid $HOST_UID --shell /bin/bash $DK_USER
 
     # Bring clojure tooling environment from root.
-    cp -r /root/.bashrc /root/.lein /root/.boot /root/.clojure \
+    cp -r /root/.bashrc /root/.lein /root/.boot /root/.clojure /root/.vim /root/.vimrc \
         /home/$DK_USER/
     chown -R $DK_USER:$DK_GROUP \
         /home/$DK_USER/.bashrc \
         /home/$DK_USER/.lein \
         /home/$DK_USER/.boot \
         /home/$DK_USER/.clojure \
+        /home/$DK_USER/.vim \
+        /home/$DK_USER/.vimrc \
         /home/$DK_USER
     chmod 644 /home/$DK_USER/.bashrc
 fi

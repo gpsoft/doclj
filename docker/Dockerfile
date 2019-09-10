@@ -8,6 +8,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         vim \
         git \
+        less \
+        net-tools \
         rlwrap \
     && rm -rf /var/lib/apt/lists/*
 
@@ -48,3 +50,15 @@ RUN chmod 755 /usr/local/bin/dev.sh
 COPY profiles.clj /root/.lein/
 COPY profile.boot /root/.boot/
 COPY deps.edn /root/.clojure/
+
+
+RUN mkdir -p /root/.vim/autoload ~/.vim/bundle
+RUN curl -LSso /root/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+WORKDIR /root/.vim/bundle
+RUN git clone https://github.com/tpope/vim-fireplace
+RUN git clone https://github.com/tpope/vim-sexp-mappings-for-regular-people.git
+RUN git clone https://github.com/guns/vim-sexp.git
+RUN git clone https://github.com/guns/vim-clojure-static
+RUN git clone https://github.com/kien/rainbow_parentheses.vim.git
+COPY .vimrc /root/.vimrc
+

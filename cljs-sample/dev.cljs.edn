@@ -1,0 +1,6 @@
+^{:watch-dirs ["src"]
+  :css-dirs ["resources/public/css"]
+  ; :open-url "http://[[server-hostname]]:[[server-port]]/index.html"
+  }
+{:main sample.core
+ :output-to "resources/public/js/app.js"}
