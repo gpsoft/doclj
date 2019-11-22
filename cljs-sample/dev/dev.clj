@@ -12,15 +12,21 @@
 (require '[cider.nrepl :as cider]
          '[nrepl.server :as nrepl]
          '[cider.piggieback :as pback])
+(defn- nrepl-handler []
+  (require 'cider.nrepl)
+  (ns-resolve 'cider.nrepl 'cider-nrepl-handler))
 (defonce server
-  #_(nrepl/start-server
-    :port 3575
-    :handler (nrepl/default-handler #'pback/wrap-cljs-repl))
   (nrepl/start-server
     :port 3575
     :bind "0.0.0.0"
-    :handler (nrepl/default-handler #'pback/wrap-cljs-repl)
-    ;:handler cider/cider-nrepl-handler
+    ;;; Not sure on `:handler` option
+    ;;; fireplace-K fails on cljs with pback version
+    ;;; cider-nrepl version looks okay
+    ;;; figwheel-main version might be better?
+    :handler
+    ;(nrepl/default-handler #'pback/wrap-cljs-repl) ;; pback version
+    cider/cider-nrepl-handler ;; cider-nrepl version
+    ;(nrepl-handler) ;; figwheel-main version
     ))
 ;; Spit port number to the file (for Vim+fireplace)
 (let [port (:port server)]
